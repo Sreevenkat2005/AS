@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Briefly is a frontend demonstration of an extractive AI news summarizer.">
+  <title>Briefly | AI News Summarizer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Briefly home">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><span class="brand-name">Briefly</span><span class="brand-subtitle">AI News Summarizer</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation">
+        <a class="nav-link active" href="#home">Home</a>
+        <a class="nav-link" href="#news">Explore News</a>
+        <a class="nav-link" href="#summarizer">Summarizer</a>
+        <a class="nav-link" href="#about">About</a>
+      </nav>
+      <div class="header-tools">
+        <label class="search-control" for="site-search">
+          <span aria-hidden="true">⌕</span>
+          <span class="sr-only">Search news</span>
+          <input id="site-search" type="search" placeholder="Search news" autocomplete="off">
+        </label>
+        <time id="today" datetime=""></time>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="welcome container" id="home" aria-labelledby="welcome-title">
+      <div class="welcome-copy">
+        <p class="eyebrow">A clearer way to catch up</p>
+        <h1 id="welcome-title">Stay informed.<br><em>Read smarter.</em></h1>
+        <p class="intro">Briefly helps readers understand lengthy articles through concise, meaningful summaries.</p>
+        <a class="button button-primary" href="#summarizer">Summarize an Article <span aria-hidden="true">→</span></a>
+      </div>
+      <aside class="welcome-note">
+        <span class="note-number">01</span>
+        <p>Read the important parts first. Explore the sample desk, then try the summarizer with your own article.</p>
+      </aside>
+    </section>
+
+    <section class="featured-section container" aria-labelledby="featured-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Editor's pick</p><h2 id="featured-title">Featured news</h2></div>
+        <p class="demo-label">Demonstration content · Not live news</p>
+      </div>
+      <article class="featured-story">
+        <div class="story-image image-urban" role="img" aria-label="Illustration of a modern city and connected technology"></div>
+        <div class="featured-content">
+          <div class="story-meta"><span class="category technology">Technology</span><time datetime="2026-10-24">24 October 2026</time></div>
+          <h3>Small cities are testing quieter, smarter ways to manage daily travel</h3>
+          <p>Transport teams are exploring how carefully placed sensors and open data can make familiar streets safer without adding more visual clutter.</p>
+          <button class="text-button read-article" type="button">Read Article <span aria-hidden="true">↗</span></button>
+        </div>
+      </article>
+    </section>
+
+    <section class="news-section container" id="news" aria-labelledby="latest-title">
+      <div class="section-heading news-heading">
+        <div><p class="eyebrow">The sample desk</p><h2 id="latest-title">Latest news</h2></div>
+        <div class="news-tools">
+          <label class="filter-label" for="category-filter">Filter by <select id="category-filter"><option value="All">All categories</option><option value="Technology">Technology</option><option value="Business">Business</option><option value="Science">Science</option><option value="Sports">Sports</option><option value="World">World</option></select></label>
+        </div>
+      </div>
+      <div class="article-grid" id="article-grid" aria-live="polite"></div>
+      <p class="empty-state" id="empty-state" hidden>No sample articles match your search. Try another word or category.</p>
+    </section>
+
+    <section class="summarizer-section" id="summarizer" aria-labelledby="summarizer-title">
+      <div class="container summarizer-layout">
+        <div class="summarizer-intro">
+          <p class="eyebrow">The main demonstration</p>
+          <h2 id="summarizer-title">Article<br><em>Summarizer</em></h2>
+          <p>Paste an article and Briefly will select the most informative sentences using a simple, transparent extractive method.</p>
+          <div class="method-note"><strong>How it works</strong><span>Sentence position + word frequency</span><span>Original wording preserved</span><span>No external AI service connected</span></div>
+        </div>
+        <div class="summarizer-panel">
+          <div class="selected-article" id="selected-article" hidden><span>Loaded sample</span><strong id="selected-title"></strong></div>
+          <form id="summarizer-form" novalidate>
+            <div class="field-group">
+              <label for="article-text">Article text <span class="required">*</span></label>
+              <textarea id="article-text" maxlength="10000" placeholder="Paste or type an article here..." required></textarea>
+              <div class="field-footer"><span id="char-counter">0 / 10,000 characters</span><span>Required</span></div>
+            </div>
+            <div class="field-group">
+              <label for="article-url">Article URL <span class="optional">(optional)</span></label>
+              <input id="article-url" type="url" placeholder="https://example.com/article">
+              <small>For demonstration only — retrieving an article from a URL requires a backend or suitable service.</small>
+            </div>
+            <fieldset class="length-options">
+              <legend>Summary length</legend>
+              <div class="length-choice">
+                <label><input type="radio" name="summary-length" value="short" checked><span><strong>Short</strong><small>1–2 sentences</small></span></label>
+                <label><input type="radio" name="summary-length" value="medium"><span><strong>Medium</strong><small>3–4 sentences</small></span></label>
+                <label><input type="radio" name="summary-length" value="detailed"><span><strong>Detailed</strong><small>5–6 sentences</small></span></label>
+              </div>
+            </fieldset>
+            <div class="form-actions">
+              <button class="button button-primary" id="summarize-button" type="submit">Summarize Article <span aria-hidden="true">→</span></button>
+              <button class="button button-quiet" id="clear-button" type="button">Clear</button>
+            </div>
+            <div class="status-message" id="form-message" role="alert" aria-live="assertive"></div>
+          </form>
+          <div class="loading-state" id="loading-state" hidden><span class="spinner" aria-hidden="true"></span><span>Reading the article and selecting key sentences…</span></div>
+          <div class="output-panel" id="output-panel" hidden>
+            <div class="output-heading"><div><p class="eyebrow">Demonstration output</p><h3>Your summary</h3></div><button class="copy-button" id="copy-button" type="button">Copy Summary</button></div>
+            <p class="disclosure">This is a basic JavaScript extractive demonstration, not a genuine AI model.</p>
+            <div class="summary-result" id="summary-result"></div>
+          </div>
+          <div class="history-panel" id="history-panel" hidden>
+            <div class="history-heading"><h3>Recent summaries</h3><button class="clear-history" id="clear-history" type="button">Clear history</button></div>
+            <ul id="history-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section container" id="about" aria-labelledby="about-title">
+      <div><p class="eyebrow">Project context</p><h2 id="about-title">Built to make<br><em>complex news clearer.</em></h2></div>
+      <div class="about-copy"><p>AI News Summarizer explores how a reader-focused interface can turn long-form information into a quick, understandable starting point.</p><p class="about-detail">The interface uses sample content and a client-side extractive algorithm so the workflow can be demonstrated safely without a backend, database, or external AI service.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner"><div><strong>Briefly</strong><span>AI News Summarizer</span></div><p>Summaries shown are demonstration outputs.</p></div>
+  </footer>
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">↑ <span>Top</span></button>
+</body>
+</html>
